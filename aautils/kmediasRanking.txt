@@ -2,41 +2,40 @@ kMeans
 ======
 
 Number of iterations: 8
-Within cluster sum of squared errors: 774.16787868439
+Within cluster sum of squared errors: 774.1678786843895
 Missing values globally replaced with mean/mode
 
 Cluster centroids:
-                          Cluster#
-Attribute     Full Data          0          1          2          3
-                 (3888)     (1859)      (344)     (1037)      (648)
-===================================================================
-dprecioemp       0.4772     0.5258     0.1275     0.4916     0.5004
-dpublicida       0.5844     0.7698     0.6533     0.5942     0.0003
-dpromred         0.5438     0.7197     0.6042     0.5481     0.0001
-dinfcomer        0.9747     0.9805     0.8608     0.9922     0.9906
-damplrrhh        0.0083     0.0063     0.0598          0          0
-dredrrhh         0.0038     0.0016     0.0344          0          0
-dformacion       0.3762     0.5997     0.2342     0.0809     0.2827
-dampcap          0.0045     0.0045     0.0258          0          0
-dredcap          0.0058     0.0043     0.0429          0          0
-dprodprog        0.5702       0.47     0.6303     0.8777     0.3333
-dcompramp        0.5684     0.4708     0.6179     0.8738     0.3333
-rpreciocom            0          0          0          0          0
-did              0.3213     0.5263     0.2249      0.081     0.1692
-dprestamo        0.0302          0       0.34          0     0.0005
-dplazopres       0.0934          0          1          0     0.0293
-dactfinco        0.0133     0.0075     0.1097          0          0
-dactfinvta       0.0033          0     0.0368          0          0
-dcomprapla            0          0          0          0          0
-daccemi          0.0043      0.001     0.0426          0          0
-dprecemi         0.0147     0.0081     0.1221          0          0
-ddivbene              0          0          0          0          0
-ddivres       1959.2406  1010.2711 16684.3996          0          0
+                              Cluster#
+Attribute       Full Data            0            1            2            3
+                   (3888)       (1859)        (344)       (1037)        (648)
+=============================================================================
+dprecioemp        40.7151      43.6092      19.8803      41.5751      42.0964
+dpublicida     68562.4265   83581.2891   74144.5037   69357.2018   21240.6949
+dpromred      205393.8179  251135.1469  221102.4343  206517.3212   64032.7567
+dinfcomer       2997.4285    3015.1769    2647.0607    3051.2297    3046.4106
+damplrrhh          0.1492        0.113       1.0756            0            0
+dredrrhh           0.6723       0.2797       6.0872            0            0
+dformacion      7036.0414    9430.1519    5515.6829    3874.0062    6035.0886
+dampcap            0.2582       0.2636       1.4942            0            0
+dredcap            0.8632       0.6294       6.3547            0            0
+dprodprog        119.7353      98.7063     132.3576      184.325           70
+dcompramp        119.3609       98.865     129.7529     183.5005           70
+did           178690.6321  253892.9961  143286.3975   90502.0479  122871.8417
+dprestamo     215844.9359            0 2432262.3048            0    3868.6389
+dplazopres         0.0934            0            1            0       0.0293
+dactfinco           0.015       0.0085       0.1233            0            0
+dactfinvta         0.0052            0        0.059            0            0
+dcomprapla              0            0            0            0            0
+daccemi         1926.5175     460.0861   19287.7907            0            0
+dprecemi           0.0881       0.0485       0.7338            0            0
+ddivbene                0            0            0            0            0
+ddivres         1959.2406    1010.2711   16684.3996            0            0
 
 
 
 
-Time taken to build model (full training data) : 0.52 seconds
+Time taken to build model (full training data) : 0.5 seconds
 
 === Model and evaluation on training set ===
 
