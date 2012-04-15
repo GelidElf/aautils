@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +45,45 @@ public class AgenteClustering extends Agente {
 
 		}
 		System.out.println("Cargados centroides");
+	}
+
+	private String capitalize(String s) {
+		String firstLetter = s.substring(0, 1);
+		String tail = s.substring(1);
+		return firstLetter.toUpperCase() + tail;
+	}
+
+	private double getDistanceToCluster(int clusterIndex) {
+		double result = 0.0;
+		for (String attribute : centroids.keySet()) {
+			Class<Estado> c = Estado.class;
+			Method getter;
+			Object getterResult = null;
+			try {
+				getter = c.getMethod(capitalize("get" + capitalize(attribute)));
+				getter.setAccessible(true);
+				getterResult = getter.invoke(estado);
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (getterResult.getClass().equals(double.class)) {
+
+			}
+		}
+		return result;
 	}
 
 	public static void main(String[] args) {
