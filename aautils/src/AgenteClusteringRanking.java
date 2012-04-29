@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AgenteClustering extends Agente {
+public class AgenteClusteringRanking extends Agente {
 
 	/**
 	 * Constructor
@@ -19,8 +19,34 @@ public class AgenteClustering extends Agente {
 	 * @param nombreMercado
 	 * @param nombreEquipo
 	 */
-	public AgenteClustering(String codSimulacion, String nombreMercado, String nombreEquipo) {
+	public AgenteClusteringRanking(String codSimulacion, String nombreMercado, String nombreEquipo) {
 		super(codSimulacion, nombreMercado, nombreEquipo);
+	}
+
+	
+	/**
+	 * Constructor de la clase.
+	 * @param String _codSimulacion Codigo de la simulacion donde va a participar el agente.
+	 * @param String _nombreMercado Nombre del mercado donde participa el agente.
+	 * @param String _nombreEquipo Nombre del equipo cuyas decisiones van a ser tomadas por el agente.
+	 * @param String _nombreLogEstados Nombre del fichero donde se almacenan los estados por los que transita el agente.
+	 * @param String _nombreLogDecisiones Nombre del fichero donde se almacenan las decisiones tomadas por el agente.
+	 */
+	public AgenteClusteringRanking(String _codSimulacion, String _nombreMercado, String _nombreEquipo, String _nombreLogEstados, String _nombreLogDecisiones){
+		 super(_codSimulacion, _nombreMercado, _nombreEquipo, _nombreLogEstados, _nombreLogDecisiones);
+	}
+
+	/**
+	 * Constructor de la clase
+	 * @param String _codSimulacion Codigo de la simulacion donde va a participar el agente.
+	 * @param String _nombreMercado Nombre del mercado donde participa el agente.
+	 * @param String _nombreEquipo Nombre del equipo cuyas decisiones van a ser tomadas por el agente.
+	 * @param String _nombreLogEstados Nombre del fichero donde se almacenan los estados por los que transita el agente.
+	 * @param String _nombreLogDecisiones Nombre del fichero donde se almacenan las decisiones tomadas por el agente.
+	 * @param String _nombreLogEstadosDecisiones Nombre del fichero donde se almancenan los estados y las decisiones tomadas por el agente.
+	 */
+	public AgenteClusteringRanking(String _codSimulacion, String _nombreMercado, String _nombreEquipo, String _nombreLogEstados, String _nombreLogDecisiones, String _nombreLogEstadosDecisiones){
+		super(_codSimulacion, _nombreMercado, _nombreEquipo, _nombreLogEstados, _nombreLogDecisiones, _nombreLogEstadosDecisiones);
 	}
 
 	private static final String SPLIT_CHARACTER = ",";
@@ -48,7 +74,7 @@ public class AgenteClustering extends Agente {
 				centroids.put(key, centroidValues);
 			}
 		} catch (IOException e) {
-
+			e.printStackTrace();
 		}
 		System.out.println("Cargados centroides");
 		sumaDeCuadrados = new double[numberOfClusters];
@@ -64,17 +90,15 @@ public class AgenteClustering extends Agente {
 				}
 
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
 	public static void main(String[] args) {
-		AgenteClustering agente = new AgenteClustering("", "", "");
+		AgenteClusteringRanking agente = new AgenteClusteringRanking("", "", "");
 		agente.tomarDecisiones();
 	}
 
@@ -105,7 +129,7 @@ public class AgenteClustering extends Agente {
 			}
 
 		} catch (IOException e) {
-
+			e.printStackTrace();
 		}
 		// ordenar instanciaAGuardar por ranking
 		Collections.sort(instanciaAGuardar, new InstanciasComparator());
@@ -134,7 +158,7 @@ public class AgenteClustering extends Agente {
 			}
 
 		} catch (IOException e) {
-
+			e.printStackTrace();
 		}
 		//Seleccionar la instancia que se corresponde con mejorInstancia
 		String[] mejorInstanciaArff = instanciasRankingArff.get(numeroInstancia);
@@ -169,9 +193,9 @@ public class AgenteClustering extends Agente {
 
 		/*
 		 * Representa la columna que queremos comparar. Estamos interesados en
-		 * ranking (136) y roi (85)
+		 * ranking_siguiente
 		 */
-		private int columna = 136;
+		private int columna = 137;
 
 		@Override
 		public int compare(String[] o1, String[] o2) {
@@ -195,11 +219,6 @@ public class AgenteClustering extends Agente {
 		return posicionMenor;
 	}
 
-	/*
-	 * private String capitalize(String s) { String firstLetter = s.substring(0,
-	 * 1); String tail = s.substring(2); return firstLetter.toUpperCase() +
-	 * tail; }
-	 */
 
 	private void getDistancesToClusters() {
 		estado = new Estado();
