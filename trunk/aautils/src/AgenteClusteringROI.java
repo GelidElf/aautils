@@ -23,7 +23,6 @@ public class AgenteClusteringROI extends Agente {
 		super(codSimulacion, nombreMercado, nombreEquipo);
 	}
 
-	
 	/**
 	 * Constructor de la clase.
 	 * @param String _codSimulacion Codigo de la simulacion donde va a participar el agente.
@@ -32,8 +31,8 @@ public class AgenteClusteringROI extends Agente {
 	 * @param String _nombreLogEstados Nombre del fichero donde se almacenan los estados por los que transita el agente.
 	 * @param String _nombreLogDecisiones Nombre del fichero donde se almacenan las decisiones tomadas por el agente.
 	 */
-	public AgenteClusteringROI(String _codSimulacion, String _nombreMercado, String _nombreEquipo, String _nombreLogEstados, String _nombreLogDecisiones){
-		 super(_codSimulacion, _nombreMercado, _nombreEquipo, _nombreLogEstados, _nombreLogDecisiones);
+	public AgenteClusteringROI(String _codSimulacion, String _nombreMercado, String _nombreEquipo, String _nombreLogEstados, String _nombreLogDecisiones) {
+		super(_codSimulacion, _nombreMercado, _nombreEquipo, _nombreLogEstados, _nombreLogDecisiones);
 	}
 
 	/**
@@ -45,7 +44,7 @@ public class AgenteClusteringROI extends Agente {
 	 * @param String _nombreLogDecisiones Nombre del fichero donde se almacenan las decisiones tomadas por el agente.
 	 * @param String _nombreLogEstadosDecisiones Nombre del fichero donde se almancenan los estados y las decisiones tomadas por el agente.
 	 */
-	public AgenteClusteringROI(String _codSimulacion, String _nombreMercado, String _nombreEquipo, String _nombreLogEstados, String _nombreLogDecisiones, String _nombreLogEstadosDecisiones){
+	public AgenteClusteringROI(String _codSimulacion, String _nombreMercado, String _nombreEquipo, String _nombreLogEstados, String _nombreLogDecisiones, String _nombreLogEstadosDecisiones) {
 		super(_codSimulacion, _nombreMercado, _nombreEquipo, _nombreLogEstados, _nombreLogDecisiones, _nombreLogEstadosDecisiones);
 	}
 
@@ -107,7 +106,7 @@ public class AgenteClusteringROI extends Agente {
 		List<String[]> instanciaAGuardar = new ArrayList<String[]>();
 		getDistancesToClusters();
 		String cluster = "cluster" + calcularDistanciaMenor();
-		System.out.println(cluster);
+		System.out.println("Cluster elegido: " + cluster);
 		// Cargar arff de los estados clusterizados
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(NOMBRE_ARCHIVO_CLUSTERIZADO));
@@ -133,11 +132,9 @@ public class AgenteClusteringROI extends Agente {
 		}
 		// ordenar instanciaAGuardar por ROI
 		Collections.sort(instanciaAGuardar, new InstanciasComparator());
-		/*
-		 * for (int i = 0; i < instanciaAGuardar.size(); i++) {
-		 * System.out.println(instanciaAGuardar.get(i)[136]); }
-		 */
+		// Como se ordena de menor a mayor, cojo la última instancia, que será la que mejor roi_siguiente tenga
 		String[] mejorInstancia = instanciaAGuardar.get(instanciaAGuardar.size() - 1);
+		// Cojo el número de la instancia para poder buscarla en el archivo global de roi
 		String instancia = mejorInstancia[0];
 		Integer numeroInstancia = Integer.parseInt(instancia);
 		// Leo el archivo inicial de ROI para encontrar la instancia que se corresponde con la mejorInstancia y ver sus decisiones
@@ -164,6 +161,9 @@ public class AgenteClusteringROI extends Agente {
 		String[] mejorInstanciaArff = instanciasROIArff.get(numeroInstancia);
 		//Mirar las decisiones tomadas y asignarlas a decisiones
 		Decisiones decisionesNuevas = new Decisiones();
+		decisionesNuevas.setCodSimulacion(this.getCodSimulacion());
+		decisionesNuevas.setNombreMercado(this.getNombreMercado());
+		decisionesNuevas.setNombreEquipo(this.getNombreEquipo());
 		decisionesNuevas.setDPrecioEmp(Double.parseDouble(mejorInstanciaArff[135]));
 		decisionesNuevas.setDPublicida(Double.parseDouble(mejorInstanciaArff[136]));
 		decisionesNuevas.setDPromred(Double.parseDouble(mejorInstanciaArff[137]));
@@ -193,7 +193,7 @@ public class AgenteClusteringROI extends Agente {
 
 		/*
 		 * Representa la columna que queremos comparar. Estamos interesados en
-		 * roi_siguiente
+		 * roi_siguiente.
 		 */
 		private int columna = 137;
 
@@ -207,6 +207,10 @@ public class AgenteClusteringROI extends Agente {
 
 	}
 
+	/*
+	 * Método que calcula cuál es la distancia menor del nuevo estado a cada
+	 * clúster.
+	 */
 	private int calcularDistanciaMenor() {
 		double distanciaMenor = distanciasACentroides[0];
 		int posicionMenor = 0;
@@ -219,13 +223,14 @@ public class AgenteClusteringROI extends Agente {
 		return posicionMenor;
 	}
 
+	/*
+	 * Método que calcula las distancias Euclidianas de los atributos del nuevo
+	 * estado a cada clúster.
+	 */
 	private void getDistancesToClusters() {
-		estado = new Estado();
 		// double result = 0.0;
 		double variableConvertida = 0.0;
 		for (String attribute : centroids.keySet()) {
-			// Class<Estado> c = Estado.class;
-			// Method getter;
 			Object getterResult = null;
 			try {
 				getterResult = fields.get(attribute).get(estado);
@@ -257,7 +262,7 @@ public class AgenteClusteringROI extends Agente {
 		}
 		for (int i = 0; i < numberOfClusters; i++) {
 			distanciasACentroides[i] = Math.sqrt(sumaDeCuadrados[i]);
-			System.out.println(distanciasACentroides[i]);
+			System.out.println("Distancias Euclideas a cluster" + i + ": " + distanciasACentroides[i]);
 		}
 	}
 
