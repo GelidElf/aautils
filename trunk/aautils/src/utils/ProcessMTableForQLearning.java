@@ -1,5 +1,6 @@
 package utils;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -157,91 +158,7 @@ public class ProcessMTableForQLearning {
 	private static boolean tieneWildCard(String entrada) {
 		return entrada.contains("*");
 	}
-
 	
-	public static class Clustering{
-
-		private HashMap<String, List<Float>> centroids;
-		private int numberOfClusters = -1;
-		
-		public Clustering(String nombreArchivoCentroides, String caracterSeparador){
-			centroids = new HashMap<String, List<Float>>();
-			cargarCentroidesEstados(nombreArchivoCentroides,caracterSeparador);
-		}
-
-		private int cargarCentroidesEstados(String nombreArchivoCentroides, String splitCharacter){
-			try {
-				BufferedReader in = new BufferedReader(new FileReader(nombreArchivoCentroides));
-				String str = null;
-				while ((str = in.readLine()) != null) {
-					str = str.trim();
-					if (!lineIsAComment(str) && !lineIsEmpty(str)){
-						String[] words = str.split(splitCharacter);
-						numberOfClusters = words.length - 1; // TODO: Check if all clusters have a centroid for all decisions!!!
-						String key = words[0];
-						List<Float> centroidValues = new ArrayList<Float>();
-						for (int i = 1; i < words.length; i++) {
-							centroidValues.add(new Float(words[i]));
-						}
-						centroids.put(key, centroidValues);
-					}
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Cargados centroides del archivo "+nombreArchivoCentroides);
-			return numberOfClusters;
-		}
-
-		private boolean lineIsEmpty(String str) {
-			return str.length() == 0;
-		}
-
-		private boolean lineIsAComment(String str) {
-			return str.startsWith(COMMENT_EXPRESSION);
-		}
-
-		public int getClusterAssignment(Map<String, Double> fieldsAndValues){
-			
-			double[] distancesToClusters = getDistancesToClusters(fieldsAndValues);
-			return calcularDistanciaMenor(distancesToClusters);
-			
-		}
-		
-		private double[] getDistancesToClusters(Map<String, Double> fieldsAndValues) {
-			double[] sumaDeCuadrados = new double[numberOfClusters];
-			for (int i = 0; i < numberOfClusters; i++) {
-				sumaDeCuadrados[i] = 0;
-			}
-			double[] distanciasACentroides = new double[numberOfClusters];
-			for (String attribute : centroids.keySet()) {
-				Double value = fieldsAndValues.get(attribute);
-				if (value != null) {
-					for (int i = 0; i < numberOfClusters; i++) {
-						sumaDeCuadrados[i] += Math.pow(Math.abs(value - centroids.get(attribute).get(i)), 2.0);
-					}
-				}
-			}
-			for (int i = 0; i < numberOfClusters; i++) {
-				distanciasACentroides[i] = Math.sqrt(sumaDeCuadrados[i]);
-				System.out.println("Distancias Euclideas a cluster" + i + ": " + distanciasACentroides[i]);
-			}
-			return distanciasACentroides;
-		}
-		
-		private int calcularDistanciaMenor(double[] distanciasACentroides) {
-			double distanciaMenor = distanciasACentroides[0];
-			int posicionMenor = 0;
-			for (int i = 1; i < distanciasACentroides.length; i++) {
-				if (distanciaMenor > distanciasACentroides[i]) {
-					distanciaMenor = distanciasACentroides[i];
-					posicionMenor = i;
-				}
-			}
-			return posicionMenor;
-		}
-		
-	}
 	
 	public static class InstanciaTablaM {
 		
